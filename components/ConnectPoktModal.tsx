@@ -23,7 +23,7 @@ export const ConnectPoktModal: React.FC<
 
   const poktWalletOptions = [
     {
-      name: 'SendWallet / NodeWallet',
+      name: 'Soothe Vault / NodeWallet',
       onConnect: connectPocketWallet,
     },
     {
