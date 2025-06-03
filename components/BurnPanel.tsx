@@ -27,6 +27,7 @@ import { useIsConnected } from '@/hooks/useIsConnected';
 import { WRAPPED_POCKET_ABI } from '@/utils/abis';
 import {
   ETH_CONFIRMATIONS,
+  PAUSED,
   POKT_NETWORK_LABEL,
   WRAPPED_POCKET_ADDRESS,
 } from '@/utils/constants';
@@ -180,7 +181,7 @@ export const BurnPanel: React.FC = () => {
             px={8}
             my={4}
             display="flex"
-            isDisabled={!isConnected}
+            isDisabled={!isConnected || PAUSED}
           >
             Burn
           </Button>

@@ -34,6 +34,7 @@ import {
   ETH_CHAIN_ID,
   ETH_NETWORK_LABEL,
   MINT_CONTROLLER_ADDRESS,
+  PAUSED,
   POKT_CHAIN_ID,
   POKT_CONFIRMATIONS,
   POKT_MULTISIG_ADDRESS,
@@ -285,7 +286,7 @@ export const MintPanel: React.FC = () => {
             px={8}
             my={4}
             display="flex"
-            isDisabled={!isPoktConnected}
+            isDisabled={!isPoktConnected || PAUSED}
           >
             Send POKT
           </Button>
@@ -415,7 +416,8 @@ export const MintPanel: React.FC = () => {
                               isDisabled={
                                 isMintNotReady ||
                                 isMintCompleted ||
-                                !isConnected
+                                !isConnected ||
+                                PAUSED
                               }
                               colorScheme="blue"
                               maxH="2rem"

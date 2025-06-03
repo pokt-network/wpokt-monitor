@@ -92,3 +92,5 @@ export const POKT_NETWORK_LABEL = ((): string => {
 
 export const WALLETCONNECT_PROJECT_ID =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+
+export const PAUSED = process.env.NEXT_PUBLIC_PAUSED === 'true';
