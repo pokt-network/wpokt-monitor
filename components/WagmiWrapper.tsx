@@ -20,7 +20,7 @@ import { usePocketWallet } from '@/contexts/PocketWallet';
 import { useBalance } from '@/hooks/useBalance';
 import { useIsConnected } from '@/hooks/useIsConnected';
 import { DEFAULT_CHAIN, ethereumClient, projectId } from '@/lib/web3';
-import { POKT_CHAIN_ID } from '@/utils/constants';
+import { PAUSED, POKT_CHAIN_ID } from '@/utils/constants';
 import { shortenHex } from '@/utils/helpers';
 import { PAGE_MAX_WIDTH, PAGE_PADDING_X } from '@/utils/theme';
 
@@ -108,6 +108,21 @@ const WagmiConnectionManager: React.FC<PropsWithChildren> = ({ children }) => {
   const { poktAddress } = usePocketWallet();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  if (PAUSED) {
+    return (
+      <>
+        <Alert status="info" w="auto">
+          <AlertIcon />
+          <AlertDescription>
+            Due to Pocket Network undergoing the Shannon upgrade, the bridge
+            will be paused for 24 hours starting at 10am ET today (June 3rd)
+          </AlertDescription>
+        </Alert>
+        {children}
+      </>
+    );
+  }
+
   return (
     <>
       {(!address || !poktAddress) && (
@@ -175,7 +190,7 @@ const Header: React.FC = () => {
         direction={{ base: 'column', md: 'row' }}
         align="center"
       >
-        {address && (
+        {address && !PAUSED && (
           <VStack>
             <Button
               leftIcon={<EthIcon boxSize="1rem" />}
@@ -202,7 +217,7 @@ const Header: React.FC = () => {
             )}
           </VStack>
         )}
-        {poktAddress && (
+        {poktAddress && !PAUSED && (
           <VStack>
             <Button
               leftIcon={<PoktIcon boxSize="1rem" />}
