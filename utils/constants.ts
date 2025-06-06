@@ -46,6 +46,10 @@ if (!process.env.NEXT_PUBLIC_POKT_RPC_URL) {
   throw new Error('Environment variable NEXT_PUBLIC_POKT_RPC_URL is not set');
 }
 
+if (!process.env.NEXT_PUBLIC_ETH_RPC_URL) {
+  throw new Error('Environment variable NEXT_PUBLIC_ETH_RPC_URL is not set');
+}
+
 export const WRAPPED_POCKET_ADDRESS =
   process.env.NEXT_PUBLIC_WRAPPED_POCKET_ADDRESS.toLowerCase();
 export const MINT_CONTROLLER_ADDRESS =
@@ -55,12 +59,11 @@ export const ETH_CHAIN_ID = process.env.NEXT_PUBLIC_ETH_CHAIN_ID;
 export const ETH_CONFIRMATIONS = Number(
   process.env.NEXT_PUBLIC_ETH_CONFIRMATIONS,
 );
+export const ETH_RPC_URL = process.env.NEXT_PUBLIC_ETH_RPC_URL;
 export const ETH_NETWORK_LABEL = ((): string => {
   switch (ETH_CHAIN_ID) {
     case '1':
       return 'Mainnet';
-    case '5':
-      return 'Goerli';
     case '11155111':
       return 'Sepolia';
     case '31337':
@@ -79,8 +82,8 @@ export const POKT_CONFIRMATIONS = Number(
 );
 export const POKT_NETWORK_LABEL = ((): string => {
   switch (POKT_CHAIN_ID) {
-    case 'testnet':
-      return 'Testnet';
+    case 'pocket-beta':
+      return 'Beta';
     case 'mainnet':
       return 'Mainnet';
     case 'localnet':

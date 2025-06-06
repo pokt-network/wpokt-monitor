@@ -32,6 +32,7 @@ import {
   WRAPPED_POCKET_ADDRESS,
 } from '@/utils/constants';
 import { getEthTxLink, humanFormattedDate } from '@/utils/helpers';
+import { bech32ToHex } from '../utils/pokt'
 
 import { HashDisplay } from './HashDisplay';
 import { Pagination } from './Pagination';
@@ -85,10 +86,21 @@ export const BurnPanel: React.FC = () => {
       });
       return;
     }
+    const hexAddress = bech32ToHex(address);
+    if (!hexAddress) {
+      toast({
+        title: 'Error',
+        description: 'Please enter a valid recipient address',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     if (!account.address || !walletClient || !publicClient) return;
     try {
       setIsLoading(true);
-      const recipient = getAddress('0x' + address);
+      const recipient = getAddress(hexAddress);
       const txHash = await walletClient.writeContract({
         account: account.address,
         address: WRAPPED_POCKET_ADDRESS as `0x${string}`,

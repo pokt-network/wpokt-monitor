@@ -28,8 +28,6 @@ export const getEthTxLink = (txHash: string): string => {
   switch (ETH_CHAIN_ID) {
     case '1':
       return `https://etherscan.io/tx/${txHash}`;
-    case '5':
-      return `https://goerli.etherscan.io/tx/${txHash}`;
     case '11155111':
       return `https://sepolia.etherscan.io/tx/${txHash}`;
     case '31337':
@@ -53,8 +51,6 @@ export const getEthAddressLink = (address: string): string => {
   switch (ETH_CHAIN_ID) {
     case '1':
       return `https://etherscan.io/address/${address}`;
-    case '5':
-      return `https://goerli.etherscan.io/address/${address}`;
     case '11155111':
       return `https://sepolia.etherscan.io/address/${address}`;
     case '31337':
