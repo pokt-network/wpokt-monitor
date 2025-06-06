@@ -4,7 +4,6 @@ import {
   Button,
   Divider,
   HStack,
-  Input,
   Link,
   Spinner,
   Table,
@@ -20,10 +19,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useCallback, useMemo, useState } from 'react';
-import { formatUnits, isAddress, parseUnits } from 'viem';
+import { formatUnits } from 'viem';
 import { useAccount, usePublicClient, useWalletClient } from 'wagmi';
 
-import { usePocketWallet } from '@/contexts/PocketWallet';
+//import { usePocketWallet } from '@/contexts/PocketWallet';
 import useAllMints from '@/hooks/useAllMints';
 import { useIsConnected } from '@/hooks/useIsConnected';
 import { useNonceMap } from '@/hooks/useNonceMap';
@@ -42,7 +41,7 @@ import {
 } from '@/utils/constants';
 import {
   getEthTxLink,
-  getPoktTxLink,
+  //getPoktTxLink,
   humanFormattedDate,
   uniqueValues,
 } from '@/utils/helpers';
@@ -84,6 +83,7 @@ export const MintPanel: React.FC = () => {
   const { data: walletClient } = useWalletClient();
   const account = useAccount();
 
+  /*
   const { poktBalance, isPoktConnected, sendPokt } = usePocketWallet();
 
   const [isSending, setIsSending] = useState(false);
@@ -102,7 +102,7 @@ export const MintPanel: React.FC = () => {
       });
       return;
     }
-
+  
     const amount = parseUnits(value, 6);
     if (amount > poktBalance) {
       toast({
@@ -124,19 +124,19 @@ export const MintPanel: React.FC = () => {
       });
       return;
     }
-
+  
     try {
       setIsSending(true);
-
+  
       const memo = JSON.stringify({
         address,
         chain_id: ETH_CHAIN_ID.toString(),
       });
-
+  
       const recipient = POKT_MULTISIG_ADDRESS;
-
+  
       const txHash = await sendPokt(amount, recipient, memo);
-
+  
       const txLink = getPoktTxLink(txHash);
       toast.closeAll();
       toast({
@@ -168,6 +168,7 @@ export const MintPanel: React.FC = () => {
       setIsSending(false);
     }
   }, [value, address, toast, poktBalance, sendPokt]);
+  */
 
   const mintTokens = useCallback(
     async (mint: Mint) => {
@@ -258,8 +259,11 @@ export const MintPanel: React.FC = () => {
             </HashDisplay>
           </Box>
           <br />
-          {`In the input fields below, enter the amount of POKT tokens you want to send and the recipient's Ethereum address.`}
+          {`With a memo of the following format: {"address": "0x...", "chain_id": "${ETH_CHAIN_ID}"}`}
+          {/*`In the input fields below, enter the amount of POKT tokens you want to send and the recipient's Ethereum address.`*/}
         </Text>
+
+        {/*
         <VStack align="start" maxW="30rem" my={4}>
           <Input
             placeholder="Mint Amount"
@@ -291,13 +295,14 @@ export const MintPanel: React.FC = () => {
             Send POKT
           </Button>
         </Text>
+        */}
         <Text>
-          {`Step 3: Monitor Your Transaction:`}
+          {`Step 2: Monitor Your Transaction:`}
           <br />
           {`Once you have sent the POKT tokens, you can find your transaction details below. Please wait for the transaction to be confirmed on the Pocket ${POKT_NETWORK_LABEL} before proceeding to the next step.`}
           <br />
           <br />
-          {`Step 4: Complete the Bridging Process:`}
+          {`Step 3: Complete the Bridging Process:`}
           <br />
           {`Once your transaction is confirmed, click the "Mint" button to complete the bridging process and mint wPOKT tokens on the Ethereum ${ETH_NETWORK_LABEL}.`}
           <br />
@@ -520,7 +525,7 @@ export const MintPanel: React.FC = () => {
                             (mint.status === 'signed' ||
                               (mint.status === 'confirmed' &&
                                 mint.signatures.length >=
-                                Number(signerThreshold))) ? (
+                                  Number(signerThreshold))) ? (
                             <Tooltip
                               label={
                                 isMintNotReady
