@@ -91,8 +91,6 @@ export const MintPanel: React.FC = () => {
   const [value, setValue] = useState('');
   const [address, setAddress] = useState('');
 
-  console.log(nonceMap);
-
   const sendTokens = useCallback(async () => {
     if (!value) {
       toast({
@@ -321,8 +319,6 @@ export const MintPanel: React.FC = () => {
                 ? !!mint.nonce && BigInt(mint.nonce) <= nonce
                 : true;
 
-            console.log({ nonce, isMintNotReady, isMintCompleted });
-
             return (
               <Tile
                 key={mint.transaction_hash}
@@ -397,8 +393,7 @@ export const MintPanel: React.FC = () => {
                             size="sm"
                             color="blue.500"
                           />
-                        ) : nonce != null &&
-                          (mint.status === 'signed') ? (
+                        ) : nonce != null && mint.status === 'signed' ? (
                           <Tooltip
                             label={
                               isMintNotReady

@@ -32,8 +32,8 @@ import {
   WRAPPED_POCKET_ADDRESS,
 } from '@/utils/constants';
 import { getEthTxLink, humanFormattedDate } from '@/utils/helpers';
-import { bech32ToHex } from '../utils/pokt'
 
+import { bech32ToHex } from '../utils/pokt';
 import { HashDisplay } from './HashDisplay';
 import { Pagination } from './Pagination';
 import { Tile } from './Tile';
@@ -260,9 +260,9 @@ export const BurnPanel: React.FC = () => {
                 },
                 {
                   label: 'Return Tx Hash',
-                  value: burn.return_tx_hash ? (
+                  value: burn.return_transaction_hash ? (
                     <HashDisplay chainId={burn.recipient_chain_id}>
-                      {burn.return_tx_hash}
+                      {burn.return_transaction_hash}
                     </HashDisplay>
                   ) : (
                     'N/A'
@@ -326,9 +326,9 @@ export const BurnPanel: React.FC = () => {
                     </Tooltip>
                   </Td>
                   <Td>
-                    {burn.return_tx_hash ? (
+                    {burn.return_transaction_hash ? (
                       <HashDisplay chainId={burn.recipient_chain_id}>
-                        {burn.return_tx_hash}
+                        {burn.return_transaction_hash}
                       </HashDisplay>
                     ) : (
                       'N/A'
