@@ -37,11 +37,15 @@ export const getEthTxLink = (txHash: string): string => {
 };
 
 export const getPoktTxLink = (txHash: string): string => {
+  if (txHash.startsWith('0x')) {
+    // eslint-disable-next-line no-param-reassign
+    txHash = txHash.slice(2);
+  }
   switch (POKT_CHAIN_ID) {
-    case 'mainnet':
-      return `https://poktscan.com/tx/${txHash}`;
-    case 'testnet':
-      return `https://poktscan.com/testnet/tx/${txHash}`;
+    case 'pocket':
+      return `https://explorer.pocket.network/pocket-mainnet/tx/${txHash}`;
+    case 'pocket-beta':
+      return `https://explorer.pocket.network/pocket-beta/tx/${txHash}`;
     default:
       return ``;
   }
@@ -61,10 +65,10 @@ export const getEthAddressLink = (address: string): string => {
 
 export const getPoktAddressLink = (account: string): string => {
   switch (POKT_CHAIN_ID) {
-    case 'mainnet':
-      return `https://poktscan.com/account/${account}`;
-    case 'testnet':
-      return `https://poktscan.com/testnet/account/${account}`;
+    case 'pocket':
+      return `https://explorer.pocket.network/pocket-mainnet/account/${account}`;
+    case 'pocket-beta':
+      return `https://explorer.pocket.network/pocket-beta/account/${account}`;
     default:
       return ``;
   }

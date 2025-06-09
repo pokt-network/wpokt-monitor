@@ -84,7 +84,7 @@ export const POKT_NETWORK_LABEL = ((): string => {
   switch (POKT_CHAIN_ID) {
     case 'pocket-beta':
       return 'Beta';
-    case 'mainnet':
+    case 'pocket':
       return 'Mainnet';
     case 'localnet':
       return 'Localnet';
