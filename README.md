@@ -1,1 +1,1 @@
-# wpokt testnet frontend
+# wpokt monitor for shannon

@@ -28,8 +28,6 @@ export const getEthTxLink = (txHash: string): string => {
   switch (ETH_CHAIN_ID) {
     case '1':
       return `https://etherscan.io/tx/${txHash}`;
-    case '5':
-      return `https://goerli.etherscan.io/tx/${txHash}`;
     case '11155111':
       return `https://sepolia.etherscan.io/tx/${txHash}`;
     case '31337':
@@ -39,11 +37,15 @@ export const getEthTxLink = (txHash: string): string => {
 };
 
 export const getPoktTxLink = (txHash: string): string => {
+  if (txHash.startsWith('0x')) {
+    // eslint-disable-next-line no-param-reassign
+    txHash = txHash.slice(2);
+  }
   switch (POKT_CHAIN_ID) {
-    case 'mainnet':
-      return `https://poktscan.com/tx/${txHash}`;
-    case 'testnet':
-      return `https://poktscan.com/testnet/tx/${txHash}`;
+    case 'pocket':
+      return `https://explorer.pocket.network/pocket-mainnet/tx/${txHash}`;
+    case 'pocket-beta':
+      return `https://explorer.pocket.network/pocket-beta/tx/${txHash}`;
     default:
       return ``;
   }
@@ -53,8 +55,6 @@ export const getEthAddressLink = (address: string): string => {
   switch (ETH_CHAIN_ID) {
     case '1':
       return `https://etherscan.io/address/${address}`;
-    case '5':
-      return `https://goerli.etherscan.io/address/${address}`;
     case '11155111':
       return `https://sepolia.etherscan.io/address/${address}`;
     case '31337':
@@ -65,10 +65,10 @@ export const getEthAddressLink = (address: string): string => {
 
 export const getPoktAddressLink = (account: string): string => {
   switch (POKT_CHAIN_ID) {
-    case 'mainnet':
-      return `https://poktscan.com/account/${account}`;
-    case 'testnet':
-      return `https://poktscan.com/testnet/account/${account}`;
+    case 'pocket':
+      return `https://explorer.pocket.network/pocket-mainnet/account/${account}`;
+    case 'pocket-beta':
+      return `https://explorer.pocket.network/pocket-beta/account/${account}`;
     default:
       return ``;
   }

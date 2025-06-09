@@ -94,9 +94,9 @@ export const InvalidMintPanel: React.FC = () => {
                 },
                 {
                   label: 'Return Tx Hash',
-                  value: invalidMint.return_tx_hash ? (
+                  value: invalidMint.return_transaction_hash ? (
                     <HashDisplay chainId={invalidMint.sender_chain_id}>
-                      {invalidMint.return_tx_hash}
+                      {invalidMint.return_transaction_hash}
                     </HashDisplay>
                   ) : (
                     'N/A'
@@ -157,9 +157,9 @@ export const InvalidMintPanel: React.FC = () => {
                     </Tooltip>
                   </Td>
                   <Td>
-                    {invalidMint.return_tx_hash ? (
+                    {invalidMint.return_transaction_hash ? (
                       <HashDisplay chainId={invalidMint.sender_chain_id}>
-                        {invalidMint.return_tx_hash}
+                        {invalidMint.return_transaction_hash}
                       </HashDisplay>
                     ) : (
                       'N/A'

@@ -15,10 +15,10 @@ import {
 import { CopyText } from './CopyText';
 
 const isETH = (chainId: string) =>
-  chainId === '5' || chainId === '1' || chainId === '31337';
+  chainId === '11155111' || chainId === '1' || chainId === '31337';
 
 const isPOKT = (chainId: string) =>
-  chainId === 'testnet' || chainId === 'mainnet' || chainId === 'localnet';
+  chainId === 'pocket-beta' || chainId === 'pocket' || chainId === 'localnet';
 
 export const HashDisplay: React.FC<{ children: string; chainId: string }> = ({
   children,
@@ -50,9 +50,7 @@ export const HashDisplay: React.FC<{ children: string; chainId: string }> = ({
   }, [chainId]);
 
   const link = useMemo(() => {
-    const isAddressValue = children.startsWith('0x')
-      ? isAddress(children)
-      : isAddress(`0x${children}`);
+    const isAddressValue = isAddress(children) || children.startsWith('pokt');
 
     if (isAddressValue) {
       if (isETH(chainId)) {

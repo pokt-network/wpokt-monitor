@@ -36,5 +36,5 @@ export type Mint = WithId<{
   data: Maybe<MintTxData>;
   signers: string[];
   signatures: string[];
-  mint_tx_hash: string;
+  mint_transaction_hash: string;
 }>;

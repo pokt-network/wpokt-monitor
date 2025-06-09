@@ -1,3 +1,5 @@
+import { bech32 } from 'bech32';
+
 export function parsePokt(amount: string | number): bigint {
   return BigInt(Number(amount) * 1e6);
 }
@@ -8,12 +10,13 @@ export function formatPokt(amount: string | bigint): string {
 
 export const UPOKT = 1000000;
 
-export const STDX_MSG_TYPES = {
-  unjail: 'pos/MsgUnjail',
-  unjail8: 'pos/8.0MsgUnjail',
-  unstake: 'pos/MsgBeginUnstake',
-  unstake8: 'pos/8.0MsgBeginUnstake',
-  stake: 'pos/MsgStake',
-  send: 'pos/Send',
-  stake8: 'pos/8.0MsgStake',
+const poktPrefix = 'pokt';
+
+export const bech32ToHex = (address: string): string => {
+  const decoded = bech32.decode(address);
+  if (decoded.prefix !== poktPrefix) {
+    return '';
+  }
+  const hex = Buffer.from(bech32.fromWords(decoded.words)).toString('hex');
+  return `0x${hex}`;
 };
