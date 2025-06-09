@@ -385,9 +385,9 @@ export const MintPanel: React.FC = () => {
                   },
                   {
                     label: 'Mint Tx Hash',
-                    value: mint.mint_tx_hash ? (
+                    value: mint.mint_transaction_hash ? (
                       <HashDisplay chainId={mint.recipient_chain_id}>
-                        {mint.mint_tx_hash}
+                        {mint.mint_transaction_hash}
                       </HashDisplay>
                     ) : (
                       <>
@@ -508,9 +508,9 @@ export const MintPanel: React.FC = () => {
                       </Tooltip>
                     </Td>
                     <Td>
-                      {mint.mint_tx_hash ? (
+                      {mint.mint_transaction_hash ? (
                         <HashDisplay chainId={mint.recipient_chain_id}>
-                          {mint.mint_tx_hash}
+                          {mint.mint_transaction_hash}
                         </HashDisplay>
                       ) : (
                         <>

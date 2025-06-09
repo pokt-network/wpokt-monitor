@@ -14,7 +14,7 @@ import { formatUnits } from 'viem';
 import { BurnPanel } from '@/components/BurnPanel';
 import { HealthPanel } from '@/components/HealthPanel';
 import { InvalidMintPanel } from '@/components/InvalidMintPanel';
-import { MintPanel } from '@/components/MintPanel';
+//import { MintPanel } from '@/components/MintPanel';
 import { Tile } from '@/components/Tile';
 import useTotals from '@/hooks/useTotals';
 import { ETH_NETWORK_LABEL, POKT_NETWORK_LABEL } from '@/utils/constants';
@@ -59,10 +59,10 @@ const WrappedPocketPage: React.FC = () => {
       <VStack minW="20rem" align="stretch" mx="auto">
         <Tile
           entries={[
-            {
-              label: 'Total Minted',
-              value: loading ? '…' : formatUnits(totals.mints, 6),
-            },
+            //{
+            //  label: 'Total Minted',
+            //  value: loading ? '…' : formatUnits(totals.mints, 6),
+            //},
             {
               label: 'Total Burnt',
               value: loading ? '…' : formatUnits(totals.burns, 6),
@@ -78,9 +78,11 @@ const WrappedPocketPage: React.FC = () => {
       <Tabs>
         <HStack justify="center" w="100%">
           <TabList>
+            {/*
             <Tab>
               <Text fontSize="lg">Mints</Text>
             </Tab>
+            */}
             <Tab>
               <Text fontSize="lg">Burns</Text>
             </Tab>
@@ -93,9 +95,11 @@ const WrappedPocketPage: React.FC = () => {
           </TabList>
         </HStack>
         <TabPanels>
+          {/*
           <TabPanel px={0}>
             <MintPanel />
           </TabPanel>
+          */}
           <TabPanel px={0}>
             <BurnPanel />
           </TabPanel>
