@@ -39,7 +39,7 @@ export const getAllMints = async (_page: number): Promise<MintData> => {
           wpokt_address: WRAPPED_POCKET_ADDRESS,
           vault_address: POKT_MULTISIG_ADDRESS,
         },
-        { sort: { height: -1 } },
+        { sort: { height: -1, updated_at: -1, log_index: -1 } },
       )
       .skip((page - 1) * PER_PAGE)
       .limit(PER_PAGE)
