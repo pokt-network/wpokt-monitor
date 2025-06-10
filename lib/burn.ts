@@ -34,7 +34,7 @@ export const getAllBurns = async (_page: number): Promise<BurnData> => {
         {
           wpokt_address: WRAPPED_POCKET_ADDRESS,
         },
-        { sort: { block_number: -1 } },
+        { sort: { block_number: -1, updated_at: -1, log_index: -1 } },
       )
       .skip((page - 1) * PER_PAGE)
       .limit(PER_PAGE)
