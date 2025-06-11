@@ -17,10 +17,13 @@ import { InvalidMintPanel } from '@/components/InvalidMintPanel';
 //import { MintPanel } from '@/components/MintPanel';
 import { Tile } from '@/components/Tile';
 import useTotals from '@/hooks/useTotals';
+import { useTotalSupply } from '@/hooks/useTotalSupply';
 import { ETH_NETWORK_LABEL, POKT_NETWORK_LABEL } from '@/utils/constants';
 
 const WrappedPocketPage: React.FC = () => {
   const { totals, loading } = useTotals();
+
+  const { totalSupply, loading: loadingSupply } = useTotalSupply();
 
   return (
     <VStack align="stretch" w="100%" spacing={4} pt={0} pb={10}>
@@ -63,6 +66,10 @@ const WrappedPocketPage: React.FC = () => {
             //  label: 'Total Minted',
             //  value: loading ? '…' : formatUnits(totals.mints, 6),
             //},
+            {
+              label: 'Total Supply',
+              value: loadingSupply ? '…' : formatUnits(totalSupply, 6),
+            },
             {
               label: 'Total Burnt',
               value: loading ? '…' : formatUnits(totals.burns, 6),
