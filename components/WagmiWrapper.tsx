@@ -10,16 +10,16 @@ import {
   //useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useWeb3Modal, Web3Modal } from '@web3modal/react';
+import { useConnectModal, useAccountModal } from '@rainbow-me/rainbowkit';
 import { PropsWithChildren, useCallback, useMemo } from 'react';
 import { formatUnits } from 'viem';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 
 import { WagmiProvider } from '@/components/WagmiProvider';
 //import { usePocketWallet } from '@/contexts/PocketWallet';
 import { useBalance } from '@/hooks/useBalance';
 import { useIsConnected } from '@/hooks/useIsConnected';
-import { DEFAULT_CHAIN, ethereumClient, projectId } from '@/lib/web3';
+import { DEFAULT_CHAIN } from '@/lib/web3';
 import { PAUSED, POKT_CHAIN_ID } from '@/utils/constants';
 import { shortenHex } from '@/utils/helpers';
 import { PAGE_MAX_WIDTH, PAGE_PADDING_X } from '@/utils/theme';
@@ -30,21 +30,21 @@ import { EthIcon } from './EthIcon';
 //import { PoktIcon } from './PoktIcon';
 
 const InvalidNetwork: React.FC = () => {
-  const { isLoading, switchNetwork } = useSwitchNetwork();
+  const { switchChain } = useSwitchChain();
 
   const onSwitch = useCallback(
-    () => switchNetwork?.(DEFAULT_CHAIN.id),
-    [switchNetwork],
+    () => switchChain?.({ chainId: DEFAULT_CHAIN.id }),
+    [switchChain],
   );
 
-  const { chain } = useNetwork();
+  const chainId = useChainId();
 
   const { address } = useAccount();
   //const { poktNetwork, poktAddress } = usePocketWallet();
 
   const isInvalidEthNetwork = useMemo(
-    () => !!chain && chain.id !== DEFAULT_CHAIN.id,
-    [chain],
+    () => chainId !== DEFAULT_CHAIN.id,
+    [chainId],
   );
 
   //const isInvalidPoktNetwork = useMemo(
@@ -79,24 +79,16 @@ const InvalidNetwork: React.FC = () => {
       </Alert>
       {isInvalidEthNetwork && (
         <>
-          {switchNetwork ? (
-            <Button
-              onClick={onSwitch}
-              isLoading={isLoading}
-              leftIcon={<EthIcon boxSize="1.25rem" />}
-              bg="gray.700"
-              _hover={{ bg: 'gray.900' }}
-              _active={{ bg: 'gray.900' }}
-              color="white"
-            >
-              Switch ETH to {DEFAULT_CHAIN.name}
-            </Button>
-          ) : (
-            <Text>
-              Please switch your ETH Wallet to{' '}
-              <strong>{DEFAULT_CHAIN.name}</strong>
-            </Text>
-          )}
+          <Button
+            onClick={onSwitch}
+            leftIcon={<EthIcon boxSize="1.25rem" />}
+            bg="gray.700"
+            _hover={{ bg: 'gray.900' }}
+            _active={{ bg: 'gray.900' }}
+            color="white"
+          >
+            Switch ETH to {DEFAULT_CHAIN.name}
+          </Button>
         </>
       )}
       {isInvalidPoktNetwork && (
@@ -111,7 +103,7 @@ const InvalidNetwork: React.FC = () => {
 const WagmiConnectionManager: React.FC<PropsWithChildren> = ({ children }) => {
   const { address } = useAccount();
 
-  const { open } = useWeb3Modal();
+  const { openConnectModal } = useConnectModal();
 
   //const { poktAddress } = usePocketWallet();
   //const { isOpen, onOpen, onClose } = useDisclosure();
@@ -144,7 +136,7 @@ const WagmiConnectionManager: React.FC<PropsWithChildren> = ({ children }) => {
             {!address && (
               <Button
                 leftIcon={<EthIcon boxSize="1.25rem" />}
-                onClick={open}
+                onClick={openConnectModal}
                 bg="gray.700"
                 _hover={{ bg: 'gray.900' }}
                 _active={{ bg: 'gray.900' }}
@@ -180,7 +172,7 @@ const Header: React.FC = () => {
   //const { poktAddress, poktBalance, isBalanceLoading, isPoktConnected } =
   //  usePocketWallet();
 
-  const { open } = useWeb3Modal();
+  const { openAccountModal } = useAccountModal();
 
   //const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -208,7 +200,7 @@ const Header: React.FC = () => {
               _active={{ bg: 'gray.900' }}
               color="white"
               fontFamily="mono"
-              onClick={open}
+              onClick={openAccountModal}
             >
               <Text mb="-2px">{shortenHex(address, 10)}</Text>
             </Button>
@@ -271,7 +263,6 @@ export const WagmiWrapper: React.FC<PropsWithChildren> = ({ children }) => {
         <Header />
         <WagmiConnectionManager>{children}</WagmiConnectionManager>
       </VStack>
-      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </WagmiProvider>
   );
 };

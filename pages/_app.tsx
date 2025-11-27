@@ -1,3 +1,5 @@
+import '@rainbow-me/rainbowkit/styles.css';
+
 import { ChakraProvider } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
