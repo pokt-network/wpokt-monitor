@@ -1,11 +1,6 @@
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from '@web3modal/ethereum';
-import { configureChains, createConfig } from 'wagmi';
-import { Chain, hardhat, mainnet, sepolia } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { fallback, http } from 'wagmi';
+import { hardhat, mainnet, sepolia } from 'wagmi/chains';
 
 import {
   ETH_CHAIN_ID,
@@ -26,39 +21,14 @@ export const DEFAULT_CHAIN = (() => {
   }
 })();
 
-type ChainProviderFn<TChain extends Chain = Chain> = (chain: TChain) => {
-  chain: TChain;
-  rpcUrls: RpcUrls;
-} | null;
+const rpcs = [http(ETH_RPC_URL), http()];
 
-type RpcUrls = {
-  http: readonly string[];
-  webSocket?: readonly string[];
-};
-
-const customProvider: ChainProviderFn = chain => {
-  if (chain.id !== Number(ETH_CHAIN_ID)) {
-    return null;
-  }
-
-  return {
-    chain,
-    rpcUrls: {
-      http: [ETH_RPC_URL],
-    },
-  };
-};
-
-const { publicClient, webSocketPublicClient } = configureChains(
-  [DEFAULT_CHAIN],
-  [customProvider, w3mProvider({ projectId }), publicProvider()],
-);
-
-export const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors: w3mConnectors({ projectId, chains: [DEFAULT_CHAIN] }),
-  publicClient,
-  webSocketPublicClient,
+export const wagmiConfig = getDefaultConfig({
+  appName: 'wPokt monitor',
+  projectId,
+  chains: [DEFAULT_CHAIN],
+  transports: {
+    [ETH_CHAIN_ID]: fallback(rpcs),
+  },
+  ssr: true, // If your dApp uses server side rendering (SSR)
 });
-
-export const ethereumClient = new EthereumClient(wagmiConfig, [DEFAULT_CHAIN]);
