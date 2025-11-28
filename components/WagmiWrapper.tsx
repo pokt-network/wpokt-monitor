@@ -10,7 +10,7 @@ import {
   //useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { useConnectModal, useAccountModal } from '@rainbow-me/rainbowkit';
+import { useAccountModal, useConnectModal } from '@rainbow-me/rainbowkit';
 import { PropsWithChildren, useCallback, useMemo } from 'react';
 import { formatUnits } from 'viem';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
