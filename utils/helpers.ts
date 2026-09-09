@@ -43,7 +43,7 @@ export const getPoktTxLink = (txHash: string): string => {
   }
   switch (POKT_CHAIN_ID) {
     case 'pocket':
-      return `https://explorer.pocket.network/pocket-mainnet/tx/${txHash}`;
+      return `https://explorer.pocket.network/tx/${txHash}`;
     case 'pocket-beta':
       return `https://explorer.pocket.network/pocket-beta/tx/${txHash}`;
     default:
@@ -66,7 +66,7 @@ export const getEthAddressLink = (address: string): string => {
 export const getPoktAddressLink = (account: string): string => {
   switch (POKT_CHAIN_ID) {
     case 'pocket':
-      return `https://explorer.pocket.network/pocket-mainnet/account/${account}`;
+      return `https://explorer.pocket.network/account/${account}`;
     case 'pocket-beta':
       return `https://explorer.pocket.network/pocket-beta/account/${account}`;
     default:
